@@ -31,3 +31,7 @@ dist/
 
 # Pytest
 .pytest_cache/
+/app/llm/main_agent/app/
+/app/llm/main_agent/atlas_collection/
+/app/llm/main_agent/index/
+/app/data/atlas_collection.pdf
