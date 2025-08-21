@@ -1,0 +1,33 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.so
+
+# Virtual environment
+.venv/
+env/
+venv/
+
+# Distribution / packaging
+*.egg-info/
+build/
+dist/
+
+# VSCode, PyCharm
+.vscode/
+.idea/
+
+# Environment variables
+.env
+
+# Docker
+*.log
+*.pid
+*.tar
+*.gz
+*.bak
+*.tmp
+.docker/
+
+# Pytest
+.pytest_cache/
