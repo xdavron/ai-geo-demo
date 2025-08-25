@@ -68,6 +68,7 @@ async def chat_stream(
     """
     agent = MainAgent()
     session_id = query_input.session_id or str(uuid.uuid4())
+    print(f"Session ID: {session_id}, User Query: {query_input.question}")
     try:
 
         async def event_generator():
@@ -84,6 +85,7 @@ async def chat_stream(
                 async for chunk in agent.get_stream_response(
                     query_input.question, session_id, user_id=session_id
                  ):
+                    print(chunk)
                     full_response += chunk
                     response = StreamQueryResponse(content=chunk, done=False)
                     yield f"data: {json.dumps(response.model_dump())}\n\n"

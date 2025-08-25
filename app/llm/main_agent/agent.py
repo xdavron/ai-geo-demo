@@ -35,7 +35,7 @@ from langchain_openai import ChatOpenAI
 from dotenv import load_dotenv
 load_dotenv()
 
-openai = ChatOpenAI(base_url=os.getenv("OPENAI_API_URL"), temperature=float(os.getenv("DEFAULT_LLM_TEMPERATURE")))
+openai = ChatOpenAI(base_url=os.getenv("OPENAI_API_URL"), temperature=float(os.getenv("DEFAULT_LLM_TEMPERATURE")), tags=["assistant_stream"])
 class MainAgent:
     def __init__(self):
         self.model = openai #init_chat_model(model_provider="openai", temperature=os.getenv("DEFAULT_LLM_TEMPERATURE"), base_url=os.getenv("OPENAI_API_URL"))
@@ -181,12 +181,17 @@ class MainAgent:
                     config,
                     stream_mode="messages"
             ):
-                try:
-                    yield token.content
-                except Exception as token_error:
-                    print(f"Error processing token, error={str(token_error)}, session_id={session_id}")
-                    # Continue with next token even if current one fails
+                if not getattr(token, "content", None):
                     continue
+
+                tags = _.get("tags", [])
+                if "assistant_stream" in tags:
+                    try:
+                        yield token.content
+                    except Exception as token_error:
+                        print(f"Error processing token, error={str(token_error)}, session_id={session_id}")
+                        # Continue with next token even if current one fails
+                        continue
         except Exception as stream_error:
             print(f"Error in stream processing, error={str(stream_error)}, session_id={session_id}")
             raise stream_error

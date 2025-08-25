@@ -2,7 +2,6 @@ import json
 
 import requests
 import streamlit as st
-import sseclient
 
 
 def get_api_response(question, session_id):
@@ -25,7 +24,7 @@ def get_api_response(question, session_id):
 
 def get_streaming_response(question, session_id):
     headers = {"accept": "text/event-stream"}
-    data = {"message": question}
+    data = {"question": question}
 
     # Assign session_id if not provided
     if session_id:
