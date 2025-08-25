@@ -13,6 +13,18 @@ class QueryResponse(BaseModel):
     session_id: str
 
 
+class StreamQueryResponse(BaseModel):
+    """Response model for streaming chat endpoint.
+
+    Attributes:
+        content: The content of the current chunk.
+        done: Whether the stream is complete.
+    """
+
+    content: str = Field(default="", description="The content of the current chunk")
+    done: bool = Field(default=False, description="Whether the stream is complete")
+
+
 class DocumentInfo(BaseModel):
     id: int
     filename: str
